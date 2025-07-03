@@ -12,4 +12,8 @@ export class UserService implements IUserRepository<UserEntity, UserParams> {
     this.users.push(newUser);
     return newUser;
   }
+
+  async read(): Promise<UserEntity[]> {
+    return this.users;
+  }
 }
