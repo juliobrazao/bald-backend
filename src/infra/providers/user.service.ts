@@ -1,10 +1,11 @@
+import { NotFoundException } from '@nestjs/common';
 import { UserEntity } from '@/domain/entities/user.entity';
 import { IUserRepository } from '@/domain/repositories/abstract-user.repository';
 import { CreateUserParams } from '@/domain/shared/create-user.params';
 import { FindUserParams } from '@/domain/shared/find-user.params';
-import { NotFoundException } from '@nestjs/common';
+import { UpdateUserParams } from '@/domain/shared/update-user.params';
 
-type UserParams = CreateUserParams | FindUserParams;
+type UserParams = CreateUserParams | FindUserParams | UpdateUserParams;
 
 export class UserService implements IUserRepository<UserEntity, UserParams> {
   users: UserEntity[] = [];
@@ -27,5 +28,38 @@ export class UserService implements IUserRepository<UserEntity, UserParams> {
     }
 
     return userFound;
+  }
+
+  async update(id: string, params: UpdateUserParams): Promise<UserEntity> {
+    const { name, email, password } = params;
+    const userFound = this.users.filter((user: UserEntity) => user.id === id);
+
+    if (!userFound) {
+      throw new NotFoundException('User not found!');
+    }
+
+    if (name) {
+      userFound[0].name = name;
+    }
+
+    if (email) {
+      userFound[0].email = email;
+    }
+
+    if (password) {
+      userFound[0].password = password;
+    }
+
+    const usersListWithoutUpdatedUser = this.users.filter(
+      (user: UserEntity) => {
+        user.id !== id;
+      },
+    );
+
+    console.log({ usersListWithoutUpdatedUser, updated: userFound[0] });
+
+    // this.users = [...usersListWithoutUpdatedUser, userFound[0]];
+
+    return userFound[0];
   }
 }

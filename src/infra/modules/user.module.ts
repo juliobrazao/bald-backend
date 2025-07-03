@@ -5,6 +5,7 @@ import { CreateUserUseCase } from '@/domain/usecases/create-user.usecase';
 import { UserController } from '@/presentation/controllers/user.controller';
 import { ReadUsersUseCase } from '@/domain/usecases/read-users.usecase';
 import { FindUserUseCase } from '@/domain/usecases/find-user.usecase';
+import { UpdateUserUseCase } from '@/domain/usecases/update-user.usecase';
 
 @Module({
   providers: [
@@ -15,6 +16,7 @@ import { FindUserUseCase } from '@/domain/usecases/find-user.usecase';
     CreateUserUseCase,
     ReadUsersUseCase,
     FindUserUseCase,
+    UpdateUserUseCase,
   ],
   controllers: [UserController],
   exports: [IUserRepository],
