@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -18,6 +19,9 @@ import { FindUserUseCase } from '@/domain/usecases/find-user.usecase';
 import { UpdateUserUseCase } from '@/domain/usecases/update-user.usecase';
 import { UpdateUserRequestDTO } from '../dtos/update-user.request.dto';
 import { UpdateUserResponseDTO } from '../dtos/update-user.response.dto';
+import { DeleteUserUseCase } from '@/domain/usecases/delete-user.usecase';
+import { DeleteUserRequestDTO } from '../dtos/delete-user.request.dto';
+import { DeleteUserResponseDTO } from '../dtos/delete-user.response.dto';
 
 @Controller('users')
 export class UserController {
@@ -26,6 +30,7 @@ export class UserController {
     private readonly readUsersUseCase: ReadUsersUseCase,
     private readonly findUserUseCase: FindUserUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
+    private readonly deleteUserUseCase: DeleteUserUseCase,
   ) {}
 
   @Post()
@@ -66,6 +71,17 @@ export class UserController {
   ): Promise<UpdateUserResponseDTO> {
     try {
       return this.updateUserUseCase.execute(id, params);
+    } catch (err) {
+      return err;
+    }
+  }
+
+  @Delete(':id')
+  async delete(
+    @Param('id') params: DeleteUserRequestDTO,
+  ): Promise<DeleteUserResponseDTO> {
+    try {
+      return this.deleteUserUseCase.execute(params);
     } catch (err) {
       return err;
     }
