@@ -4,13 +4,8 @@ import { IUserRepository } from '@/domain/repositories/abstract-user.repository'
 import { CreateUserParams } from '@/domain/shared/create-user.params';
 import { FindUserParams } from '@/domain/shared/find-user.params';
 import { UpdateUserParams } from '@/domain/shared/update-user.params';
-import { DeleteUserParams } from '@/domain/shared/delete-user.params';
 
-type UserParams =
-  | CreateUserParams
-  | FindUserParams
-  | UpdateUserParams
-  | DeleteUserParams;
+type UserParams = CreateUserParams | FindUserParams | UpdateUserParams;
 
 export class UserService implements IUserRepository<UserEntity, UserParams> {
   users: UserEntity[] = [];
@@ -64,8 +59,10 @@ export class UserService implements IUserRepository<UserEntity, UserParams> {
     return userFound[0];
   }
 
-  async delete({ id }: DeleteUserParams): Promise<UserEntity> {
+  async delete(id: string): Promise<UserEntity> {
     const userFound = this.users.filter((user: UserEntity) => user.id === id);
+
+    console.log('service: ', { id, userFound });
 
     if (!userFound) {
       throw new NotFoundException('User not found!');
@@ -75,7 +72,7 @@ export class UserService implements IUserRepository<UserEntity, UserParams> {
       (user: UserEntity) => user.id !== id,
     );
 
-    this.users = usersListWithoutUpdatedUser;
+    this.users = [...usersListWithoutUpdatedUser];
 
     return userFound[0];
   }

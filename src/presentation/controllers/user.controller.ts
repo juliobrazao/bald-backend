@@ -17,11 +17,11 @@ import { FindUserRequestDTO } from '@/presentation/dtos/find-user.request.dto';
 import { FindUserResponseDTO } from '@/presentation/dtos/find-user.response.dto';
 import { FindUserUseCase } from '@/domain/usecases/find-user.usecase';
 import { UpdateUserUseCase } from '@/domain/usecases/update-user.usecase';
-import { UpdateUserRequestDTO } from '../dtos/update-user.request.dto';
-import { UpdateUserResponseDTO } from '../dtos/update-user.response.dto';
+import { UpdateUserRequestDTO } from '@/presentation/dtos/update-user.request.dto';
+import { UpdateUserResponseDTO } from '@/presentation/dtos/update-user.response.dto';
 import { DeleteUserUseCase } from '@/domain/usecases/delete-user.usecase';
-import { DeleteUserRequestDTO } from '../dtos/delete-user.request.dto';
-import { DeleteUserResponseDTO } from '../dtos/delete-user.response.dto';
+import { DeleteUserRequestDTO } from '@/presentation/dtos/delete-user.request.dto';
+import { DeleteUserResponseDTO } from '@/presentation/dtos/delete-user.response.dto';
 
 @Controller('users')
 export class UserController {
@@ -77,11 +77,9 @@ export class UserController {
   }
 
   @Delete(':id')
-  async delete(
-    @Param('id') params: DeleteUserRequestDTO,
-  ): Promise<DeleteUserResponseDTO> {
+  async delete(@Param('id') id: string): Promise<DeleteUserResponseDTO> {
     try {
-      return this.deleteUserUseCase.execute(params);
+      return this.deleteUserUseCase.execute(id);
     } catch (err) {
       return err;
     }
