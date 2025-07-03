@@ -51,14 +51,10 @@ export class UserService implements IUserRepository<UserEntity, UserParams> {
     }
 
     const usersListWithoutUpdatedUser = this.users.filter(
-      (user: UserEntity) => {
-        user.id !== id;
-      },
+      (user: UserEntity) => user.id !== id,
     );
 
-    console.log({ usersListWithoutUpdatedUser, updated: userFound[0] });
-
-    // this.users = [...usersListWithoutUpdatedUser, userFound[0]];
+    this.users = [...usersListWithoutUpdatedUser, userFound[0]];
 
     return userFound[0];
   }
