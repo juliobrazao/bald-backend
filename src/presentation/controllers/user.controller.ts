@@ -20,7 +20,6 @@ import { UpdateUserUseCase } from '@/domain/usecases/update-user.usecase';
 import { UpdateUserRequestDTO } from '@/presentation/dtos/update-user.request.dto';
 import { UpdateUserResponseDTO } from '@/presentation/dtos/update-user.response.dto';
 import { DeleteUserUseCase } from '@/domain/usecases/delete-user.usecase';
-import { DeleteUserRequestDTO } from '@/presentation/dtos/delete-user.request.dto';
 import { DeleteUserResponseDTO } from '@/presentation/dtos/delete-user.response.dto';
 
 @Controller('users')
