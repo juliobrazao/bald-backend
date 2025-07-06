@@ -62,8 +62,6 @@ export class UserService implements IUserRepository<UserEntity, UserParams> {
   async delete(id: string): Promise<UserEntity> {
     const userFound = this.users.filter((user: UserEntity) => user.id === id);
 
-    console.log('service: ', { id, userFound });
-
     if (!userFound) {
       throw new NotFoundException('User not found!');
     }
