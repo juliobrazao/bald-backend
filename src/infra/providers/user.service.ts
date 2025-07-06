@@ -23,7 +23,7 @@ export class UserService implements IUserRepository<UserEntity, UserParams> {
   async find({ id }: FindUserParams): Promise<UserEntity[]> {
     const userFound = this.users.filter((user: UserEntity) => user.id === id);
 
-    if (!userFound) {
+    if (userFound.length === 0) {
       throw new NotFoundException('User not found!');
     }
 
@@ -34,7 +34,7 @@ export class UserService implements IUserRepository<UserEntity, UserParams> {
     const { name, email, password } = params;
     const userFound = this.users.filter((user: UserEntity) => user.id === id);
 
-    if (!userFound) {
+    if (userFound.length === 0) {
       throw new NotFoundException('User not found!');
     }
 
@@ -62,7 +62,7 @@ export class UserService implements IUserRepository<UserEntity, UserParams> {
   async delete(id: string): Promise<UserEntity> {
     const userFound = this.users.filter((user: UserEntity) => user.id === id);
 
-    if (!userFound) {
+    if (userFound.length === 0) {
       throw new NotFoundException('User not found!');
     }
 
